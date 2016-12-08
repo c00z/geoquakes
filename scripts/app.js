@@ -3,11 +3,10 @@ var weekly_quakes_endpoint = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/s
 
 $(document).on("ready", function() {
   //load page with map
-var quakeData =  $.ajax( {
+$.ajax( {
         method:"GET",
         url:"http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson",
         dataType: "json",
-        data: $('body').serialize(),
         success: onSuccess,
         // error: onError,
         // complete: onCompletion
