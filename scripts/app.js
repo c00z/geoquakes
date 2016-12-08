@@ -13,8 +13,8 @@ $.ajax( {
       })
 //add in map on page include SF coordinates
 var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
-            zoom: 1
+            center: { lat: 37.78, lng: -122.44},
+            zoom: 3
               });
 
 var houseMarker = {url: "earthquake.png", scaledSize: new google.maps.Size (22, 32)}
