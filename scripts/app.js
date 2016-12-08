@@ -12,37 +12,45 @@ $.ajax( {
         // complete: onCompletion
       })
 
+map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -34.397, lng: 150.644},
+            zoom: 1
+              });
 
 function onSuccess(quakes){
     quakes.features.forEach(function(quakes){
-      var timeSince = time(quakes);
-      var developerHtml = template({
-      magnitude: quakes.properties.mag,
-      place: quakes.properties.place,
-      time: timeSince //create funct later
+        var lngLat = {
+          lng: quakes.geometry.coordinates[1],
+          lat: quakes.geometry.coordinates[0]
+        }
+        var timeSince = time(quakes);
+        var developerHtml = template({
+          magnitude: quakes.properties.mag,
+          place: quakes.properties.place,
+          time: timeSince
+        });
+        $('#info').append(developerHtml);
+        marker = new google.maps.Marker({
+          map: map,
+          position: lngLat
     });
-    $('#info').append(developerHtml);
   });
 }
 
-      // var timeSince = time(quakes);
-      // var earthquake-template
+
+// function plotCoordinates (feature) {
+//   new google.maps.Marker( {
+//     position: {
+//     long: feature.geometry.coordinates[1],
+//     lat: feature.geometry.coordinates[0]
+//   })
 
 
 
     var source = $('#earthquake-template').html();
     var template = Handlebars.compile(source);
 
-    // shake.forEach(function(object) {
-    //  $('#shaker').append(developerHtml) //HANDLE BARS
 
-  //    var developerHtml = template({
-  //      title: responseData.feature.properties.title,
-  //      lat: responseData.feature.geometry.coordinates[0],
-  //      lon: responseData.feature.geometry.coordinates[1],
-  //      });
-  //
-  // };
 
   function time(quakes) {
     var quakeTime = quakes.properties.time;
@@ -53,6 +61,13 @@ function onSuccess(quakes){
 
 })
 
+// function plotCoordinates (feature) {
+//   new google.maps.Marker( {
+//     position: {
+//     long: feature.geometry.coordinates[1],
+//     lat: feature.geometry.coordinates[0]
+//   })
+// }
   // function onError(){
   // // alert("Sorry, there was a problem!");
   // // console.log("Error: " + errorThrown);
