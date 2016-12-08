@@ -11,17 +11,20 @@ $.ajax( {
         // error: onError,
         // complete: onCompletion
       })
-
-map = new google.maps.Map(document.getElementById('map'), {
+//add in map on page include SF coordinates
+var map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: -34.397, lng: 150.644},
             zoom: 1
               });
 
+var houseMarker = {url: "earthquake.png", scaledSize: new google.maps.Size (22, 32)}
+
 function onSuccess(quakes){
     quakes.features.forEach(function(quakes){
+        //variable for dropping pins
         var lngLat = {
-          lng: quakes.geometry.coordinates[1],
-          lat: quakes.geometry.coordinates[0]
+          lng: quakes.geometry.coordinates[0],
+          lat: quakes.geometry.coordinates[1]
         }
         var timeSince = time(quakes);
         var developerHtml = template({
@@ -32,18 +35,11 @@ function onSuccess(quakes){
         $('#info').append(developerHtml);
         marker = new google.maps.Marker({
           map: map,
-          position: lngLat
+          position: lngLat,
+          icon: houseMarker
     });
   });
 }
-
-
-// function plotCoordinates (feature) {
-//   new google.maps.Marker( {
-//     position: {
-//     long: feature.geometry.coordinates[1],
-//     lat: feature.geometry.coordinates[0]
-//   })
 
 
 
@@ -51,7 +47,7 @@ function onSuccess(quakes){
     var template = Handlebars.compile(source);
 
 
-
+//correcting milisecond to hours
   function time(quakes) {
     var quakeTime = quakes.properties.time;
     var now = Date.now();
@@ -60,22 +56,3 @@ function onSuccess(quakes){
   }
 
 })
-
-// function plotCoordinates (feature) {
-//   new google.maps.Marker( {
-//     position: {
-//     long: feature.geometry.coordinates[1],
-//     lat: feature.geometry.coordinates[0]
-//   })
-// }
-  // function onError(){
-  // // alert("Sorry, there was a problem!");
-  // // console.log("Error: " + errorThrown);
-  // // console.log("Status: " + status);
-  // // console.dir(xhr);
-  //
-  // };
-  //
-  // function onCompletion(){
-  //
-  // };
